@@ -1,23 +1,230 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Document metadata -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dice roller program</title>
+    <meta
+        name="description"
+        content="ROLL & REVEL — a beautifully crafted dice roller where every roll tells a story."
+    >
+    <meta name="theme-color" content="#24151B">
+
+    <title>ROLL & REVEL — The Ritual of Chance</title>
+
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Custom styles -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Application logic -->
+    <script src="index.js" defer></script>
 </head>
+
 <body>
+    <!-- Decorative background elements -->
+    <div class="background-glow background-glow-one" aria-hidden="true"></div>
+    <div class="background-glow background-glow-two" aria-hidden="true"></div>
 
-    <div id="container">
+    <!-- Main application -->
+    <main class="app-shell">
 
-        <h1>Dice roller</h1>
-        <label ># of dice:</label>
-        <input type="number" value="1" min="1" id="numOfDice">
-        <button onclick="rollDice()">Roll dice</button>
-        <div id="diceResult"></div>
-        <div id="diceImages"></div>
+        <!-- Brand header -->
+        <header class="site-header">
+            <a class="brand" href="#" aria-label="Roll and Revel home">
+                <span class="brand-mark" aria-hidden="true">✳</span>
 
+                <span class="brand-name">
+                    ROLL <span class="brand-ampersand">&</span> REVEL
+                </span>
+            </a>
 
+            <p class="header-note">A SMALL RITUAL OF CHANCE</p>
+        </header>
+
+        <!-- Introduction -->
+        <section class="hero" aria-labelledby="heroTitle">
+            <p class="eyebrow">
+                THE ART OF THE UNPREDICTABLE
+            </p>
+
+            <h1 id="heroTitle">
+                Leave it to <span>chance.</span>
+            </h1>
+
+            <p class="hero-description">
+                Set your intention. Roll the dice.
+                Let the universe have its say.
+            </p>
+        </section>
+
+        <!-- Dice roller workspace -->
+        <section class="game-panel" aria-labelledby="rollerTitle">
+
+            <!-- Panel heading -->
+            <div class="panel-heading">
+                <div>
+                    <p class="section-index">01 / THE RITUAL</p>
+                    <h2 id="rollerTitle">Your next move</h2>
+                </div>
+
+                <span class="status-label">
+                    <span class="status-dot" aria-hidden="true"></span>
+                    READY TO ROLL
+                </span>
+            </div>
+
+            <!-- Dice count selection -->
+            <div class="control-section">
+                <label for="diceCount">How many dice?</label>
+
+                <div class="dice-count-control">
+                    <button
+                        id="decreaseDice"
+                        class="count-button"
+                        type="button"
+                        aria-label="Remove one die"
+                        disabled
+                    >
+                        −
+                    </button>
+
+                    <output id="diceCountDisplay" for="diceCount">
+                        2
+                    </output>
+
+                    <button
+                        id="increaseDice"
+                        class="count-button"
+                        type="button"
+                        aria-label="Add one die"
+                    >
+                        +
+                    </button>
+                </div>
+
+                <input
+                    id="diceCount"
+                    type="hidden"
+                    value="2"
+                >
+
+                <p class="control-hint">
+                    Choose between 1 and 6 dice.
+                </p>
+            </div>
+
+            <!-- Dice stage -->
+            <div
+                id="diceStage"
+                class="dice-stage"
+                aria-label="Dice results"
+            >
+                <div class="die" data-die-index="0" aria-label="Die 1: 1">
+                    <span class="die-face" aria-hidden="true">
+                        <span class="pip pip-center"></span>
+                    </span>
+                </div>
+
+                <div class="die" data-die-index="1" aria-label="Die 2: 1">
+                    <span class="die-face" aria-hidden="true">
+                        <span class="pip pip-center"></span>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Roll action -->
+            <div class="roll-action">
+                <button id="rollButton" class="roll-button" type="button">
+                    <span class="roll-button-icon" aria-hidden="true">✳</span>
+                    <span>ROLL THE DICE</span>
+                    <span class="roll-button-arrow" aria-hidden="true">↗</span>
+                </button>
+
+                <p class="roll-hint">
+                    No predictions. Just possibilities.
+                </p>
+            </div>
+
+            <!-- Results -->
+            <div class="results-panel" aria-labelledby="resultsTitle">
+                <div class="result-item">
+                    <p id="resultsTitle" class="result-label">
+                        YOUR TOTAL
+                    </p>
+
+                    <output id="totalResult" class="total-result">
+                        —
+                    </output>
+                </div>
+
+                <div class="result-divider" aria-hidden="true"></div>
+
+                <div class="result-item result-item-secondary">
+                    <p class="result-label">LAST ROLL</p>
+
+                    <output id="lastRollResult" class="last-roll-result">
+                        Waiting for fate
+                    </output>
+                </div>
+            </div>
+
+            <!-- Accessible status announcements -->
+            <p
+                id="rollMessage"
+                class="sr-only"
+                role="status"
+                aria-live="polite"
+            >
+                Ready to roll.
+            </p>
+        </section>
+
+        <!-- Roll history -->
+        <section class="history-section" aria-labelledby="historyTitle">
+            <div class="history-heading">
+                <div>
+                    <p class="section-index">02 / THE STORY SO FAR</p>
+                    <h2 id="historyTitle">Fortune remembers</h2>
+                </div>
+
+                <button
+                    id="clearHistoryButton"
+                    class="clear-history-button"
+                    type="button"
+                    disabled
+                >
+                    Clear history
+                </button>
+            </div>
+
+            <div id="historyList" class="history-list">
+                <p id="emptyHistory" class="empty-history">
+                    Your first roll is waiting to happen.
+                </p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="site-footer">
+            <p>MADE FOR THE LOVE OF PLAY</p>
+
+            <p class="footer-symbol" aria-hidden="true">✳</p>
+
+            <p>EVERY ROLL HAS A STORY</p>
+        </footer>
+
+    </main>
+</body>
+</html>
+```
 
 
 
